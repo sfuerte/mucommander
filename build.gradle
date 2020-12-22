@@ -17,6 +17,8 @@ plugins {
     id 'edu.sc.seis.launch4j' version '2.4.6'
 }
 
+def javaVersion="11"
+
 allprojects {
     group = 'org.mucommander'
     version = '0.9.6'
@@ -28,12 +30,12 @@ allprojects {
 
 subprojects {
     apply plugin: 'biz.aQute.bnd.builder'
-    compileJava.options.compilerArgs += ['--release', '8']
+    compileJava.options.compilerArgs += ['--release', "${javaVersion}"]
 }
 
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
-compileJava.options.compilerArgs += ['--release', '8']
+compileJava.options.compilerArgs += ['--release', "${javaVersion}"]
 
 repositories {
     jcenter()
@@ -220,15 +222,16 @@ buildDeb {
     recommends('java-virtual-machine')
 }
 
+// macOS packaging
 macAppBundle {
     appName = "muCommander"
     dmgName = 'mucommander-'+project.version+'-'+project.ext.release
     mainClassName = "com.mucommander.main.muCommander"
-    appStyle = "Oracle"
-    bundleJRE = true
+    appStyle = "universalJavaApplicationStub"
+    bundleJRE = false
     jreHome = "jre/macOS/Contents/Home"
     bundleIdentifier = "com.mucommander.muCommander"
-    jvmVersion = "1.6+"
+    jvmVersion = "${javaVersion}"
     icon = "package/osx/icon.icns"
     bundleAllowMixedLocalizations = "true"
     bundleExtras.put("NSHighResolutionCapable", "true")
@@ -315,7 +318,7 @@ launch4j {
     dontWrapJar = true
     classpath = ['.']
     headerType = "gui"
-    jreMinVersion = "1.8"
+    jreMinVersion = "${javaVersion}"
     if (project.ext.bundleJRE) {
         bundledJre64Bit = true
         bundledJrePath = "jre"
@@ -466,4 +469,3 @@ task(afterEclipseImport).doLast {
     f.append('encoding//src/main/resources/dictionary_zh_CN.properties=UTF-8\n')
     f.append('encoding//src/main/resources/dictionary_zh_TW.properties=UTF-8\n')
 }
-
