@@ -3,21 +3,21 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.3.0'
+    classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:${pluginBizAQuteBndVersion}"
   }
 }
 
 plugins {
-    id 'com.athaydes.osgi-run' version '1.6.0'
+    id 'com.athaydes.osgi-run' version "${pluginOsgiRunVersion}"
     id 'java'
-    id 'org.ajoberstar.grgit' version '3.1.1'
-    id 'nebula.ospackage' version '8.3.0'
-    id 'com.github.johnrengelman.shadow' version '5.1.0'
-    id 'edu.sc.seis.macAppBundle' version '2.3.0'
-    id 'edu.sc.seis.launch4j' version '2.4.6'
+    id 'org.ajoberstar.grgit' version "${pluginGrgitVersion}"
+    id 'nebula.ospackage' version "${pluginNebulaOspackageVersion}"
+    id 'com.github.johnrengelman.shadow' version "${pluginJohnrengelmanShadowVersion}"
+    id 'edu.sc.seis.macAppBundle' version "${pluginMacAppBundleVersion}"
+    id 'edu.sc.seis.launch4j' version "${pluginLaunch4jVersion}"
 }
 
-def javaVersion="11"
+// def javaVersion="11"
 
 allprojects {
     group = 'org.mucommander'
@@ -43,8 +43,8 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.felix:org.apache.felix.main:6.0.3'
-    compile 'com.beust:jcommander:1.78'
+    compile "org.apache.felix:org.apache.felix.main:${depApacheFelixMainVersion}"
+    compile "com.beust:jcommander:${depBeustJcommanderVersion}"
 
     osgiRuntime project('mucommander-core')
     osgiRuntime project('mucommander-command')
@@ -106,6 +106,18 @@ createBundlesDir.doLast {
 
 runOsgi {
     javaArgs = '-Djava.library.path=/usr/local/lib' // for Libguestfs
+    // FIXME: ZGC is supported on Linux starting from JRE 11+ - https://wiki.openjdk.java.net/display/zgc/Main#Main-SupportedPlatforms
+    // if ((javaVersion.toInteger() >= 11 && org.gradle.nativeplatform.platform.OperatingSystem.isLinux()) || (javaVersion.toInteger() >= 14))
+    if (javaVersion.toInteger() >= 14)
+        javaArgs += ' -XX:+UseZGC'
+    javaArgs += ' -XX:+DisableExplicitGC -XX:+UnlockExperimentalVMOptions'
+    javaArgs += ' -XX:+PrintClassHistogram -XX:+HeapDumpOnOutOfMemoryError'
+    javaArgs += " -Xlog:gc:file=${buildDir}/jvm_gc.log:utctime,pid,level,tags:filecount=5,filesize=1024000"
+    javaArgs += " -XX:HeapDumpPath=${buildDir}/jvm_heapdump.hprof"
+    javaArgs += ' -Xmx1g -XX:MaxMetaspaceSize=256m'
+    javaArgs += ' -XX:MaxTenuringThreshold=1 -XX:+UseAES -XX:+UseCompressedOops'
+    javaArgs += ' --illegal-access=warn'
+    javaArgs += ' -Djava.security.egd=file:/dev/./urandom'
     def port = System.getenv('DEBUG')
     if (port) {
         javaArgs += ' -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=' + port
@@ -227,7 +239,7 @@ macAppBundle {
     appName = "muCommander"
     dmgName = 'mucommander-'+project.version+'-'+project.ext.release
     mainClassName = "com.mucommander.main.muCommander"
-    appStyle = "universalJavaApplicationStub"
+    appStyle = "Oracle"
     bundleJRE = false
     jreHome = "jre/macOS/Contents/Home"
     bundleIdentifier = "com.mucommander.muCommander"
@@ -280,6 +292,16 @@ macAppBundle {
     javaProperties.put("com.apple.hwaccel", "true")
     javaProperties.put("apple.laf.useScreenMenuBar", "true")
     javaProperties.put("file.encoding", "UTF-8")
+    javaProperties.put("java.security.egd", "file:/dev/./urandom")
+    if (javaVersion.toInteger() >= 14)
+        javaExtras.put("-XX:+UseZGC", null)
+    javaExtras.put("-XX:+DisableExplicitGC", null)
+    javaExtras.put("-XX:+UnlockExperimentalVMOptions", null)
+    javaExtras.put("-Xmx1g", null)
+    javaExtras.put("-XX:MaxMetaspaceSize", "256m")
+    javaExtras.put("-XX:MaxTenuringThreshold", "1")
+    javaExtras.put("-XX:+UseAES", null)
+    javaExtras.put("-XX:+UseCompressedOops", null)
 }
 
 copyToResourcesJava.dependsOn createBundlesDir

@@ -1,10 +1,10 @@
 repositories.jcenter()
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.26'
-    comprise 'com.ibm.icu:icu4j:59.2'
+    compile "org.slf4j:slf4j-api:${depSlf4jVersion}"
+    comprise "com.ibm.icu:icu4j:${depIcu4jVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
 }
 
 jar {

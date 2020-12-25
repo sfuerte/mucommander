@@ -5,18 +5,18 @@ dependencies {
     compile project(':mucommander-format-tar')
     compile project(':mucommander-process')
     compile project(':mucommander-translator')
-    compile 'org.ovirt.engine.api:sdk:4.2.1'
-    compile 'org.osgi:osgi.core:7.0.0'
-    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile "org.ovirt.engine.api:sdk:${depOvirtEngineVersion}"
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
+    compile "com.googlecode.json-simple:json-simple:${depGooglecodeJsonVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }
 
 repositories.jcenter()
 
 jar {
-   bnd ('Bundle-Name': 'muCommander-registry', 
+   bnd ('Bundle-Name': 'muCommander-registry',
         'Bundle-Vendor': 'muCommander',
         'Bundle-Description': 'Library with configuration tools',
         'Bundle-DocURL': 'https://www.mucommander.com',

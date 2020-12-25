@@ -3,10 +3,10 @@ dependencies {
     compile project(':mucommander-commons-util')
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-translator')
-    compile 'org.ovirt.engine.api:sdk:4.2.1'
-    compile 'org.osgi:osgi.core:7.0.0'
+    compile "org.ovirt.engine.api:sdk:${depOvirtEngineVersion}"
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }
 

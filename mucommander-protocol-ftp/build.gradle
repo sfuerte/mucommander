@@ -3,11 +3,11 @@ dependencies {
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-encoding')
     compile project(':mucommander-translator')
-    compile 'commons-net:commons-net:3.6'
+    compile "commons-net:commons-net:${depApacheCommonsNetVersion}"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${junitVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile project(':mucommander-commons-file')
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }

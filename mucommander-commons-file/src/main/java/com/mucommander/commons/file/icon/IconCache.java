@@ -18,7 +18,7 @@
 
 package com.mucommander.commons.file.icon;
 
-import org.apache.commons.collections.map.ReferenceMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 
 import javax.swing.*;
 
@@ -27,7 +27,7 @@ import javax.swing.*;
  * Any kind of Object may be used as the key: a file, a URL, an extension, ... allowing different of icon caching
  * strategies to be implemented.
  *
- * <p>Icons are stored as {@link java.lang.ref.SoftReference soft references} so they can be garbage collected 
+ * <p>Icons are stored as {@link java.lang.ref.SoftReference soft references} so they can be garbage collected
  * when the VM runs low on memory.</p>
  *
  * <p>The implementation uses the {@link ReferenceMap} class part of the <code>Apache Commons Collection</code> library.
@@ -38,7 +38,7 @@ import javax.swing.*;
 public class IconCache {
 
    /** The actual hash map */
-    protected final ReferenceMap hashMap = new ReferenceMap(ReferenceMap.HARD, ReferenceMap.SOFT);
+    protected final ReferenceMap hashMap = new ReferenceMap(ReferenceMap.ReferenceStrength.HARD, ReferenceMap.ReferenceStrength.WEAK);
 
     /**
      * Creates a new icon cache.

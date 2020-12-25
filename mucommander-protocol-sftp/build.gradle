@@ -2,11 +2,11 @@ dependencies {
     compile project(':mucommander-commons-file')
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-translator')
-    compile 'com.jcraft:jsch:0.1.55'
-    compile 'com.jcraft:jzlib:1.1.3'
-    compile 'org.osgi:osgi.core:7.0.0'
+    compile "com.jcraft:jsch:${depJcraftJschVersion}"
+    compile "com.jcraft:jzlib:${depJcraftJzlibVersion}"
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }
 
