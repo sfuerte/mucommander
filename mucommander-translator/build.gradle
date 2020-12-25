@@ -2,10 +2,10 @@ repositories.jcenter()
 
 dependencies {
     compile project(":mucommander-preferences")
-    compile 'org.slf4j:slf4j-api:1.7.26'
+    compile "org.slf4j:slf4j-api:${depSlf4jVersion}"
 
-    testCompile 'org.testng:testng:6.11'
-    testCompile 'junit:junit:4.12'
+    testCompile "org.testng:testng:${testngVersion}"
+    testCompile "junit:junit:${junitVersion}"
 }
 
 jar {

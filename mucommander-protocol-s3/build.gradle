@@ -2,20 +2,30 @@ dependencies {
     compile project(':mucommander-commons-file')
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-translator')
-    compile 'net.java.dev.jets3t:jets3t:0.9.4'
-    compile 'commons-logging:commons-logging:1.2'
-    compile 'javax.xml:jaxrpc-api:1.1'
-    compile 'javax.jms:jms:1.1'
-    compile 'org.glassfish:javax.xml.soap:10.0-b28'
+    compile "net.java.dev.jets3t:jets3t:${depJets3tVersion}"
+    compile "commons-logging:commons-logging:${depApacheCommonsLoggingVersion}"
+    compile "javax.xml:jaxrpc-api:${depJavaxXmlJaxrpcVersion}"
+    compile "javax.jms:jms:${depJavaxJmsVersion}"
+    compile "org.glassfish:javax.xml.soap:${depGlassfishJavaxXmlSoapVersion}"
+    // FIXME: use published lib and clean-up binary file from the repo
     compile files('libs/mail.osgi-1.4.jar')
+    // compile "javax.mail:mail.osgi:${depJavaxMailOsgiVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile project(':mucommander-commons-file')
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }
 
-repositories.jcenter()
-repositories.mavenCentral()
+repositories {
+    jcenter()
+    mavenCentral()
+
+    // maven {
+    //     // javax.mail:mail.osgi
+    //     url "https://repository.mulesoft.org/nexus/content/repositories/public"
+    // }
+
+}
 
 jar {
    bnd ('Bundle-Name': 'muCommander-s3',

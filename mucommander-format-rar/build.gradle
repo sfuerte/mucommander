@@ -4,11 +4,11 @@ configurations {
 
 dependencies {
     compile project(':mucommander-commons-file')
-    compile 'org.osgi:osgi.core:7.0.0'
-    compile 'org.apache.commons:commons-vfs2:2.3'
-    compile 'com.github.junrar:junrar:4.0.0'
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
+    compile "org.apache.commons:commons-vfs2:${depApacheCommonsVfs2Version}"
+    compile "com.github.junrar:junrar:${depJunrarVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
 }
 
 // In this section you declare where to find the dependencies of your project

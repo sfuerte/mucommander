@@ -6,10 +6,9 @@ dependencies {
     compile project(':mucommander-commons-file')
     compile project(':mucommander-commons-util')
 
-    compile 'org.exbin.deltahex:deltahex-swing:0.1.2'
-    compile 'org.exbin.deltahex:deltahex-swing:0.1.2'
+    compile "org.exbin.deltahex:deltahex-swing:${depExbinDeltahexVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
 }
 
 repositories.jcenter()

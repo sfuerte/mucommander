@@ -4,7 +4,7 @@ repositories.jcenter()
 dependencies {
     compile project(':mucommander-commons-file')
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile project(':mucommander-commons-file')
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }
@@ -27,4 +27,3 @@ jar {
         'Build-URL': "https://www.mucommander.com/version/nightly.xml",
         'Bundle-Activator': 'com.mucommander.commons.file.archive.zip.Activator')
 }
-

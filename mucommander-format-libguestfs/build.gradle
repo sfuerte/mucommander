@@ -1,6 +1,6 @@
 dependencies {
     compile project(':mucommander-commons-file')
-    compile 'org.osgi:osgi.core:7.0.0'
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
     compile files('libs/libguestfs.jar')
 }
 

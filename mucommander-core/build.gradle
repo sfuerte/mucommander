@@ -17,15 +17,15 @@ dependencies {
     compileOnly project(':mucommander-os-api')
     compileOnly project(':mucommander-viewer-api')
 
-    compile 'ch.qos.logback:logback-core:1.2.3'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'org.jmdns:jmdns:3.5.5'
-    compile 'org.slf4j:slf4j-api:1.7.26'
-    compile 'org.osgi:osgi.core:7.0.0'
-    comprise 'org.unix4j:unix4j-command:0.5'
+    compile "ch.qos.logback:logback-core:${depLogbackVersion}"
+    compile "ch.qos.logback:logback-classic:${depLogbackVersion}"
+    compile "org.jmdns:jmdns:${depJmdnsVersion}"
+    compile "org.slf4j:slf4j-api:${depSlf4jVersion}"
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
+    comprise "org.unix4j:unix4j-command:${depUnix4jVersion}"
 
-    testCompile 'org.testng:testng:6.11'
-    testCompile 'junit:junit:4.12'
+    testCompile "org.testng:testng:${testngVersion}"
+    testCompile "junit:junit:${junitVersion}"
     testCompile project(':mucommander-commons-file')
     testCompile project(':mucommander-commons-conf')
     testCompile project(':mucommander-commons-collections')
