@@ -6,7 +6,7 @@ dependencies {
     compile project(":mucommander-commons-io")
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${junitVersion}"
 }
 
 jar {

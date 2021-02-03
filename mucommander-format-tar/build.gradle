@@ -5,7 +5,7 @@ dependencies {
     compile project(':mucommander-commons-file')
     compile project(':apache-bzip2')
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
 }
 
 jar {
@@ -26,4 +26,3 @@ jar {
         'Build-Url': "https://www.mucommander.com/version/nightly.xml",
         'Bundle-Activator': 'com.mucommander.commons.file.archive.tar.Activator')
 }
-

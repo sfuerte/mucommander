@@ -2,9 +2,9 @@ dependencies {
     compile project(':mucommander-commons-file')
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-translator')
-    compile 'org.osgi:osgi.core:7.0.0'
+    compile "org.osgi:osgi.core:${depOsgiVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     testCompile project(':mucommander-commons-file')
     testCompile files(project(':mucommander-commons-file').sourceSets.test.output)
 }

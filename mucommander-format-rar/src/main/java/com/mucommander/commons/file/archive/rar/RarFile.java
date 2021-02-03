@@ -22,7 +22,7 @@ import java.util.Collection;
 
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
-import com.github.junrar.exception.RarException.RarExceptionType;
+import com.github.junrar.exception.UnsupportedRarV5Exception;
 import com.github.junrar.rarfile.FileHeader;
 import com.mucommander.commons.file.AbstractFile;
 import com.mucommander.commons.file.UnsupportedFileOperationException;
@@ -32,10 +32,10 @@ import com.mucommander.commons.util.CircularByteBuffer;
  * @author Arik Hadas
  */
 public class RarFile {
-	
+
     /** Interface to junrar library */
     private Archive archive;
-    
+
 
     public RarFile(AbstractFile file) throws IOException, UnsupportedFileOperationException, RarException {
         try (InputStream fileIn = file.getInputStream()) {
@@ -46,28 +46,28 @@ public class RarFile {
     public Collection<FileHeader> getEntries() {
     	return archive.getFileHeaders();
     }
-    
+
     public InputStream getEntryInputStream(String path) throws IOException, RarException {
         final FileHeader header = archive.getFileHeaders().stream()
                 .filter(h -> h.getFileNameString().equals(path))
                 .findFirst()
                 .orElse(null);
 
-    	// If the file that is going to be extracted is divided and continued in another archive 
-        // part - don't extract it and throw corresponding exception to raise an error. 
+    	// If the file that is going to be extracted is divided and continued in another archive
+        // part - don't extract it and throw corresponding exception to raise an error.
         if (header.isSplitAfter())
-    		throw new RarException(RarExceptionType.notImplementedYet);
-    	
+    		throw new UnsupportedRarV5Exception();
+
         final CircularByteBuffer cbb = new CircularByteBuffer(CircularByteBuffer.INFINITE_SIZE);
-        
+
         new Thread(
     		    new Runnable(){
     		      public void run(){
     		    	try {
 						archive.extractFile(header, cbb.getOutputStream());
 					} catch (RarException e) {
-						if (e.getType() != RarExceptionType.crcError)
-							e.printStackTrace();
+						// if (e.getType() != RarExceptionType.crcError)
+						e.printStackTrace();
 					}
     		    	finally {
     		    		try {
@@ -79,7 +79,7 @@ public class RarFile {
     		      }
     		    }
     		  ).start();
-        
+
         return cbb.getInputStream();
     }
 }

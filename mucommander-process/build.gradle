@@ -14,10 +14,10 @@ repositories.jcenter()
 
 dependencies {
     compile project(":mucommander-commons-file")
-    compile 'org.slf4j:slf4j-api:1.7.26'
+    compile "org.slf4j:slf4j-api:${depSlf4jVersion}"
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${junitVersion}"
 }
 
 jar {

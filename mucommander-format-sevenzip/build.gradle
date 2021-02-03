@@ -4,7 +4,7 @@ repositories.jcenter()
 dependencies {
     compile project(':mucommander-commons-file')
 
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
 }
 
 jar {
@@ -23,4 +23,3 @@ jar {
         'Build-Date': new Date().format('yyyyMMdd'),
         'Build-Url': "https://www.mucommander.com/version/nightly.xml")
 }
-

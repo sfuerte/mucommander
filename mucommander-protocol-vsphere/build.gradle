@@ -2,14 +2,14 @@ dependencies {
     compile project(':mucommander-commons-file')
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-translator')
-    compile 'javax.xml.ws:jaxws-api:2.2.12'
+    compile "javax.xml.ws:jaxws-api:${depJavaxXmlWsJaxwsVersion}"
 
-    runtime 'javax.jws:javax.jws-api:1.1'
+    runtime "javax.jws:javax.jws-api:${depJavaxJwsVersion}"
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${junitVersion}"
     compile project(':mucommander-commons-file')
-    testCompile 'org.testng:testng:6.11'
+    testCompile "org.testng:testng:${testngVersion}"
     compile files('libs/vim25.jar')
 }
 

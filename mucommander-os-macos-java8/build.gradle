@@ -23,15 +23,15 @@ dependencies {
     compile project(":mucommander-process")
     compile project(":mucommander-translator")
 
-    comprise 'net.java.dev.jna:jna-platform:5.5.0'
-    compile 'org.slf4j:slf4j-api:1.7.26'
+    comprise "net.java.dev.jna:jna-platform:${depJnaVersion}"
+    compile "org.slf4j:slf4j-api:${depSlf4jVersion}"
     compile 'com.googlecode.plist:dd-plist:1.23'
 
     // Apple's Java extensions
     compileOnly files('libs/java-extension.jar')
 
     // Use JUnit test framework
-    testImplementation 'org.testng:testng:6.11'
+    testImplementation "org.testng:testng:${testngVersion}"
 }
 
 jar {
