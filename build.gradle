@@ -139,7 +139,7 @@ runOsgi {
             instruction 'Bundle-Name', 'ovirt-sdk'
         }
         manifest("google-api-services.*") {
-            instruction 'Bundle-Version', '1.23.0'
+            instruction 'Bundle-Version', "${depGoogleAPIClient}"
         }
         manifest("google-oauth-client-[0-9].*") {
             instruction 'Export-Package', 'com.google.api.client.auth.oauth2', '*'
@@ -258,6 +258,7 @@ macAppBundle {
     bundleAllowMixedLocalizations = "true"
     bundleExtras.put("NSHighResolutionCapable", "true")
     bundleExtras.put("NSSupportsAutomaticGraphicsSwitching", "true")
+    bundleExtras.put("NSAppleEventsUsageDescription", "There was an error while launching the application. Please click OK to display a dialog with more information or cancel and view the syslog for details.")
     backgroundImage = "package/osx/bg.gif"
     backgroundImageWidth = 450
     backgroundImageHeight = 475
@@ -314,6 +315,15 @@ macAppBundle {
     javaExtras.put("-XX:+UseCompressedOops", null)
 }
 
+// HACK: update on ARM as default JavaAppLauncher is x86_64 only - https://github.com/crotwell/gradle-macappbundle/issues/73
+// requires manual launcher recompilation from https://github.com/TheInfiniteKind/appbundler
+Architecture _arch = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentArchitecture;
+task copyUpdatedStub(dependsOn: [createApp, copyStub], type: Copy) {
+    from file("${->project.buildDir}/../../appbundler/appbundler/bin/classes/com/oracle/appbundler/JavaAppLauncher")
+    into "${project.buildDir}/${project.macAppBundle.appOutputDir}/${->project.macAppBundle.appName}.app/Contents/MacOS"
+}
+copyUpdatedStub.onlyIf { _arch.getName() == "aarch64" }
+
 copyToResourcesJava.dependsOn createBundlesDir
 copyToResourcesJava.doLast {
     copy {
@@ -341,6 +351,7 @@ copyInfoToAppOutputDir.doFirst {
     into "${->project.buildDir}/${->project.macAppBundle.appOutputDir}/"
 }
 createDmg.dependsOn copyInfoToAppOutputDir
+createDmg.dependsOn copyUpdatedStub
 
 launch4j {
     icon = "$projectDir/package/windows/mucommander.ico"

@@ -3,13 +3,14 @@ dependencies {
     compile project(':mucommander-protocol-api')
     compile project(':mucommander-encoding')
     compile project(':mucommander-translator')
-    compile 'com.google.api-client:google-api-client:1.23.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
-    compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
+    compile "com.google.api-client:google-api-client:${depGoogleAPIClient}"
+    compile "com.google.http-client:google-http-client-jackson2:${depGoogleHTTPClientJackson2}"
+    compile "com.google.oauth-client:google-oauth-client-jetty:${depGoogleOAuthlient}"
+    compile "com.google.apis:google-api-services-drive:${depGoogleAPIServicesDrive}"
 
-    testImplementation 'junit:junit:4.12'
+    testCompile "junit:junit:${junitVersion}"
 
-    testCompile 'org.testng:testng:6.11'
+    testImplementation "org.testng:testng:${testngVersion}"
 }
 
 repositories.mavenCentral()
